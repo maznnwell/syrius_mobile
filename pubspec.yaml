@@ -26,7 +26,7 @@ dependencies:
   drift_flutter: ^0.1.0
   eip1559: ^0.6.2
   eth_sig_util: ^0.0.9
-  fl_chart: ^0.68.0
+  fl_chart: ^0.70.2
   flutter: 
     sdk: flutter
   flutter_displaymode: ^0.6.0
@@ -59,8 +59,8 @@ dependencies:
   secp256r1: 
     git: 
       url: https://github.com/drblazer21/flutter_secp256r1/
-      ref: fc59b0a4a1b7729a02c86b538e40b39dd9a96e71
-  secure_content: ^0.1.0
+      ref: main
+  secure_content: ^1.0.0
   share_plus: ^10.0.0
   shared_preferences: ^2.2.3
   skeletonizer: ^1.1.2+1
@@ -69,7 +69,10 @@ dependencies:
   tuple: ^2.0.2
   url_launcher: ^6.0.20
   walletconnect_flutter_v2: ^2.3.1
-  web3_provider: ^1.1.4
+  web3_provider:
+    git:
+      url: https://github.com/maznnwell/flutter-web3-provider
+      ref: main
   web3dart: ^2.7.1
   znn_sdk_dart:
     git:
@@ -87,6 +90,7 @@ dev_dependencies:
 
 dependency_overrides:
   dart_style: 2.3.6
+  screen_capture_event: 1.2.0
   web: ^0.5.0
 
 flutter: 

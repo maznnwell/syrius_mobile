@@ -259,8 +259,9 @@ Future<void> initGlobalServices() async {
   sl.get<PinExponentialBackoffService>().attemptsCounter =
       int.parse(pinLoggingFailedAttempts);
 
+  // TODO: check how can we see if strong box is supported by the Android device
   if (Platform.isAndroid) {
-    kIsStrongboxSupported = await SecureP256.isStrongboxSupported();
+    kIsStrongboxSupported = true;
   }
 
   final List<BiometricType> availableBiometryList =
