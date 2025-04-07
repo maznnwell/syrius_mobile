@@ -2,10 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bitcoin_base/bitcoin_base.dart';
+import 'package:blockchain_utils/service/models/params.dart';
 import 'package:syrius_mobile/btc/cross_platform_websocket/core.dart';
 import 'package:syrius_mobile/btc/electrum/request_completer.dart';
 
-class ElectrumWebSocketService with BitcoinBaseElectrumRPCService {
+class ElectrumWebSocketService with ElectrumServiceProvider {
   ElectrumWebSocketService._(
     this.url,
     WebSocketCore channel, {
@@ -78,21 +79,20 @@ class ElectrumWebSocketService with BitcoinBaseElectrumRPCService {
   }
 
   @override
-  Future<Map<String, dynamic>> call(
-    ElectrumRequestDetails params, [
+  Future<BaseServiceResponse<T>> doRequest<T>(
+    ElectrumRequestDetails params, {
     Duration? timeout,
-  ]) async {
-    final AsyncRequestCompleter completer =
+  }) async {
+    final AsyncRequestCompleter compeleter =
         AsyncRequestCompleter(params.params);
-
     try {
-      requests[params.id] = completer;
+      requests[params.requestID] = compeleter;
       add(params.toWebSocketParams());
-      final result = await completer.completer.future
+      final result = await compeleter.completer.future
           .timeout(timeout ?? defaultRequestTimeOut);
-      return result;
+      return params.toResponse(result);
     } finally {
-      requests.remove(params.id);
+      requests.remove(params.requestID);
     }
   }
 }

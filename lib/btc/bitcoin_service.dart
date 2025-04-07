@@ -7,7 +7,7 @@ import 'package:syrius_mobile/model/electrum_btc_node_stats.dart';
 import 'package:syrius_mobile/utils/ui/notification_utils.dart';
 
 class BitcoinService {
-  ElectrumApiProvider? _electrumApi;
+  ElectrumProvider? _electrumApi;
   ApiProvider? _explorerApi;
 
   Future<void> init({required AppNetwork appNetwork}) async {
@@ -18,7 +18,7 @@ class BitcoinService {
 
       final service = await ElectrumSSLService.connect(uri);
 
-      _electrumApi = ElectrumApiProvider(service);
+      _electrumApi = ElectrumProvider(service);
 
       final String explorerApiBaseUrl = appNetwork.explorerApiBaseUrl;
 
@@ -26,6 +26,7 @@ class BitcoinService {
         url: "$explorerApiBaseUrl/address/###/utxo",
         feeRate: "$explorerApiBaseUrl/v1/fees/recommended",
         transaction: "$explorerApiBaseUrl/tx/###",
+        rawTransaction: "$explorerApiBaseUrl/tx/###",
         sendTransaction: "$explorerApiBaseUrl/tx",
         apiType: APIType.mempool,
         transactions: "$explorerApiBaseUrl/address/###/txs",
@@ -51,7 +52,7 @@ class BitcoinService {
   }) async {
     /// Return the confirmed and unconfirmed balances of a script hash.
     final accountBalance = await _electrumApi!.request(
-      ElectrumGetScriptHashBalance(
+      ElectrumRequestGetScriptHashBalance(
         scriptHash: bitcoinBaseAddress.pubKeyHash(),
       ),
     );
@@ -66,7 +67,7 @@ class BitcoinService {
     );
 
     final List<ElectrumUtxo> electrumUtxos = await _electrumApi!.request(
-      ElectrumScriptHashListUnspent(
+      ElectrumRequestScriptHashListUnspent(
         scriptHash: bitcoinBaseAddress.pubKeyHash(),
       ),
     );
@@ -84,7 +85,7 @@ class BitcoinService {
   Future<BitcoinFeeRate> feeRate() => _explorerApi!.getNetworkFeeRate();
 
   Future<String> sendRawTx({required String rawTx}) => _electrumApi!.request(
-        ElectrumBroadCastTransaction(transactionRaw: rawTx),
+        ElectrumRequestBroadCastTransaction(transactionRaw: rawTx),
       );
 
   Future<void> switchNetwork({required AppNetwork appNetwork}) async {
@@ -103,7 +104,7 @@ class BitcoinService {
 
   Future<ElectrumBtcNodeStats> getNodeStats() async {
     final dynamic electrumServerFeatures = await _electrumApi!.request(
-      ElectrumServerFeatures(),
+      ElectrumRequestServerFeatures(),
     );
 
     return ElectrumBtcNodeStats.fromJson(

@@ -23,8 +23,6 @@ class $AppAddressesTable extends AppAddresses
   late final GeneratedColumn<int> index = GeneratedColumn<int>(
       'index', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _blockChainMeta =
-      const VerificationMeta('blockChain');
   @override
   late final GeneratedColumnWithTypeConverter<BlockChain, int> blockChain =
       GeneratedColumn<int>('block_chain', aliasedName, false,
@@ -73,7 +71,6 @@ class $AppAddressesTable extends AppAddresses
     } else if (isInserting) {
       context.missing(_indexMeta);
     }
-    context.handle(_blockChainMeta, const VerificationResult.success());
     if (data.containsKey('hex')) {
       context.handle(
           _hexMeta, hex.isAcceptableOrUnknown(data['hex']!, _hexMeta));
@@ -368,7 +365,6 @@ class $AppNetworksTable extends AppNetworks
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $AppNetworksTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _assetsMeta = const VerificationMeta('assets');
   @override
   late final GeneratedColumnWithTypeConverter<AppNetworkAssetEntries, String>
       assets = GeneratedColumn<String>('assets', aliasedName, false,
@@ -384,8 +380,6 @@ class $AppNetworksTable extends AppNetworks
       requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _blockChainMeta =
-      const VerificationMeta('blockChain');
   @override
   late final GeneratedColumnWithTypeConverter<BlockChain, int> blockChain =
       GeneratedColumn<int>('block_chain', aliasedName, false,
@@ -421,7 +415,6 @@ class $AppNetworksTable extends AppNetworks
   late final GeneratedColumn<String> url = GeneratedColumn<String>(
       'url', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
   late final GeneratedColumnWithTypeConverter<NetworkType, int> type =
       GeneratedColumn<int>('type', aliasedName, false,
@@ -449,11 +442,9 @@ class $AppNetworksTable extends AppNetworks
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    context.handle(_assetsMeta, const VerificationResult.success());
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    context.handle(_blockChainMeta, const VerificationResult.success());
     if (data.containsKey('block_explorer_url')) {
       context.handle(
           _blockExplorerUrlMeta,
@@ -486,7 +477,6 @@ class $AppNetworksTable extends AppNetworks
     } else if (isInserting) {
       context.missing(_urlMeta);
     }
-    context.handle(_typeMeta, const VerificationResult.success());
     return context;
   }
 
@@ -1170,7 +1160,6 @@ class $EthereumTxsTable extends EthereumTxs
   late final GeneratedColumn<DateTime> txDateTime = GeneratedColumn<DateTime>(
       'tx_date_time', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _statusMeta = const VerificationMeta('status');
   @override
   late final GeneratedColumnWithTypeConverter<EthereumTransactionStatus, int>
       status = GeneratedColumn<int>('status', aliasedName, false,
@@ -1240,7 +1229,6 @@ class $EthereumTxsTable extends EthereumTxs
     } else if (isInserting) {
       context.missing(_txDateTimeMeta);
     }
-    context.handle(_statusMeta, const VerificationResult.success());
     return context;
   }
 
@@ -2072,7 +2060,6 @@ class $WalletNotificationsTable extends WalletNotifications
   late final GeneratedColumn<String> details = GeneratedColumn<String>(
       'details', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
   late final GeneratedColumnWithTypeConverter<NotificationType, int> type =
       GeneratedColumn<int>('type', aliasedName, false,
@@ -2120,7 +2107,6 @@ class $WalletNotificationsTable extends WalletNotifications
     } else if (isInserting) {
       context.missing(_detailsMeta);
     }
-    context.handle(_typeMeta, const VerificationResult.success());
     if (data.containsKey('is_read')) {
       context.handle(_isReadMeta,
           isRead.isAcceptableOrUnknown(data['is_read']!, _isReadMeta));
@@ -2432,73 +2418,92 @@ typedef $$AppAddressesTableUpdateCompanionBuilder = AppAddressesCompanion
 });
 
 class $$AppAddressesTableFilterComposer
-    extends FilterComposer<_$Database, $AppAddressesTable> {
-  $$AppAddressesTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$Database, $AppAddressesTable> {
+  $$AppAddressesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get index => $state.composableBuilder(
-      column: $state.table.index,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get index => $composableBuilder(
+      column: $table.index, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<BlockChain, BlockChain, int> get blockChain =>
-      $state.composableBuilder(
-          column: $state.table.blockChain,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
+      $composableBuilder(
+          column: $table.blockChain,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
 
-  ColumnFilters<String> get hex => $state.composableBuilder(
-      column: $state.table.hex,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get hex => $composableBuilder(
+      column: $table.hex, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get label => $state.composableBuilder(
-      column: $state.table.label,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get label => $composableBuilder(
+      column: $table.label, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get bitcoinNetVersion => $state.composableBuilder(
-      column: $state.table.bitcoinNetVersion,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get bitcoinNetVersion => $composableBuilder(
+      column: $table.bitcoinNetVersion,
+      builder: (column) => ColumnFilters(column));
 }
 
 class $$AppAddressesTableOrderingComposer
-    extends OrderingComposer<_$Database, $AppAddressesTable> {
-  $$AppAddressesTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$Database, $AppAddressesTable> {
+  $$AppAddressesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get index => $state.composableBuilder(
-      column: $state.table.index,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get index => $composableBuilder(
+      column: $table.index, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get blockChain => $state.composableBuilder(
-      column: $state.table.blockChain,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get blockChain => $composableBuilder(
+      column: $table.blockChain, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get hex => $state.composableBuilder(
-      column: $state.table.hex,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get hex => $composableBuilder(
+      column: $table.hex, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get label => $state.composableBuilder(
-      column: $state.table.label,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get label => $composableBuilder(
+      column: $table.label, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get bitcoinNetVersion => $state.composableBuilder(
-      column: $state.table.bitcoinNetVersion,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get bitcoinNetVersion => $composableBuilder(
+      column: $table.bitcoinNetVersion,
+      builder: (column) => ColumnOrderings(column));
+}
+
+class $$AppAddressesTableAnnotationComposer
+    extends Composer<_$Database, $AppAddressesTable> {
+  $$AppAddressesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get index =>
+      $composableBuilder(column: $table.index, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<BlockChain, int> get blockChain =>
+      $composableBuilder(
+          column: $table.blockChain, builder: (column) => column);
+
+  GeneratedColumn<String> get hex =>
+      $composableBuilder(column: $table.hex, builder: (column) => column);
+
+  GeneratedColumn<String> get label =>
+      $composableBuilder(column: $table.label, builder: (column) => column);
+
+  GeneratedColumn<int> get bitcoinNetVersion => $composableBuilder(
+      column: $table.bitcoinNetVersion, builder: (column) => column);
 }
 
 class $$AppAddressesTableTableManager extends RootTableManager<
@@ -2507,6 +2512,7 @@ class $$AppAddressesTableTableManager extends RootTableManager<
     AppAddress,
     $$AppAddressesTableFilterComposer,
     $$AppAddressesTableOrderingComposer,
+    $$AppAddressesTableAnnotationComposer,
     $$AppAddressesTableCreateCompanionBuilder,
     $$AppAddressesTableUpdateCompanionBuilder,
     (AppAddress, BaseReferences<_$Database, $AppAddressesTable, AppAddress>),
@@ -2516,10 +2522,12 @@ class $$AppAddressesTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$AppAddressesTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$AppAddressesTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$AppAddressesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AppAddressesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AppAddressesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<int> index = const Value.absent(),
@@ -2565,6 +2573,7 @@ typedef $$AppAddressesTableProcessedTableManager = ProcessedTableManager<
     AppAddress,
     $$AppAddressesTableFilterComposer,
     $$AppAddressesTableOrderingComposer,
+    $$AppAddressesTableAnnotationComposer,
     $$AppAddressesTableCreateCompanionBuilder,
     $$AppAddressesTableUpdateCompanionBuilder,
     (AppAddress, BaseReferences<_$Database, $AppAddressesTable, AppAddress>),
@@ -2607,7 +2616,7 @@ final class $$AppNetworksTableReferences
 
   $$EthereumTxsTableProcessedTableManager get ethereumTxsRefs {
     final manager = $$EthereumTxsTableTableManager($_db, $_db.ethereumTxs)
-        .filter((f) => f.network.id($_item.id));
+        .filter((f) => f.network.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_ethereumTxsRefsTable($_db));
     return ProcessedTableManager(
@@ -2622,7 +2631,7 @@ final class $$AppNetworksTableReferences
 
   $$NetworkAssetsTableProcessedTableManager get networkAssetsRefs {
     final manager = $$NetworkAssetsTableTableManager($_db, $_db.networkAssets)
-        .filter((f) => f.network.id($_item.id));
+        .filter((f) => f.network.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_networkAssetsRefsTable($_db));
     return ProcessedTableManager(
@@ -2631,134 +2640,210 @@ final class $$AppNetworksTableReferences
 }
 
 class $$AppNetworksTableFilterComposer
-    extends FilterComposer<_$Database, $AppNetworksTable> {
-  $$AppNetworksTableFilterComposer(super.$state);
+    extends Composer<_$Database, $AppNetworksTable> {
+  $$AppNetworksTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
   ColumnWithTypeConverterFilters<AppNetworkAssetEntries, AppNetworkAssetEntries,
           String>
-      get assets => $state.composableBuilder(
-          column: $state.table.assets,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
+      get assets => $composableBuilder(
+          column: $table.assets,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
 
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<BlockChain, BlockChain, int> get blockChain =>
-      $state.composableBuilder(
-          column: $state.table.blockChain,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
+      $composableBuilder(
+          column: $table.blockChain,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
 
-  ColumnFilters<String> get blockExplorerUrl => $state.composableBuilder(
-      column: $state.table.blockExplorerUrl,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get blockExplorerUrl => $composableBuilder(
+      column: $table.blockExplorerUrl,
+      builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get chainId => $state.composableBuilder(
-      column: $state.table.chainId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get chainId => $composableBuilder(
+      column: $table.chainId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get currencySymbol => $state.composableBuilder(
-      column: $state.table.currencySymbol,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get currencySymbol => $composableBuilder(
+      column: $table.currencySymbol,
+      builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get url => $state.composableBuilder(
-      column: $state.table.url,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get url => $composableBuilder(
+      column: $table.url, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<NetworkType, NetworkType, int> get type =>
-      $state.composableBuilder(
-          column: $state.table.type,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
+      $composableBuilder(
+          column: $table.type,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
 
-  ComposableFilter ethereumTxsRefs(
-      ComposableFilter Function($$EthereumTxsTableFilterComposer f) f) {
-    final $$EthereumTxsTableFilterComposer composer = $state.composerBuilder(
+  Expression<bool> ethereumTxsRefs(
+      Expression<bool> Function($$EthereumTxsTableFilterComposer f) f) {
+    final $$EthereumTxsTableFilterComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.id,
-        referencedTable: $state.db.ethereumTxs,
+        referencedTable: $db.ethereumTxs,
         getReferencedColumn: (t) => t.network,
-        builder: (joinBuilder, parentComposers) =>
-            $$EthereumTxsTableFilterComposer(ComposerState($state.db,
-                $state.db.ethereumTxs, joinBuilder, parentComposers)));
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$EthereumTxsTableFilterComposer(
+              $db: $db,
+              $table: $db.ethereumTxs,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return f(composer);
   }
 
-  ComposableFilter networkAssetsRefs(
-      ComposableFilter Function($$NetworkAssetsTableFilterComposer f) f) {
-    final $$NetworkAssetsTableFilterComposer composer = $state.composerBuilder(
+  Expression<bool> networkAssetsRefs(
+      Expression<bool> Function($$NetworkAssetsTableFilterComposer f) f) {
+    final $$NetworkAssetsTableFilterComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.id,
-        referencedTable: $state.db.networkAssets,
+        referencedTable: $db.networkAssets,
         getReferencedColumn: (t) => t.network,
-        builder: (joinBuilder, parentComposers) =>
-            $$NetworkAssetsTableFilterComposer(ComposerState($state.db,
-                $state.db.networkAssets, joinBuilder, parentComposers)));
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$NetworkAssetsTableFilterComposer(
+              $db: $db,
+              $table: $db.networkAssets,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return f(composer);
   }
 }
 
 class $$AppNetworksTableOrderingComposer
-    extends OrderingComposer<_$Database, $AppNetworksTable> {
-  $$AppNetworksTableOrderingComposer(super.$state);
-  ColumnOrderings<String> get assets => $state.composableBuilder(
-      column: $state.table.assets,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$Database, $AppNetworksTable> {
+  $$AppNetworksTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get assets => $composableBuilder(
+      column: $table.assets, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get blockChain => $state.composableBuilder(
-      column: $state.table.blockChain,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get blockChain => $composableBuilder(
+      column: $table.blockChain, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get blockExplorerUrl => $state.composableBuilder(
-      column: $state.table.blockExplorerUrl,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get blockExplorerUrl => $composableBuilder(
+      column: $table.blockExplorerUrl,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get chainId => $state.composableBuilder(
-      column: $state.table.chainId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get chainId => $composableBuilder(
+      column: $table.chainId, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get currencySymbol => $state.composableBuilder(
-      column: $state.table.currencySymbol,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get currencySymbol => $composableBuilder(
+      column: $table.currencySymbol,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get url => $state.composableBuilder(
-      column: $state.table.url,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get url => $composableBuilder(
+      column: $table.url, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get type => $state.composableBuilder(
-      column: $state.table.type,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnOrderings(column));
+}
+
+class $$AppNetworksTableAnnotationComposer
+    extends Composer<_$Database, $AppNetworksTable> {
+  $$AppNetworksTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumnWithTypeConverter<AppNetworkAssetEntries, String> get assets =>
+      $composableBuilder(column: $table.assets, builder: (column) => column);
+
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<BlockChain, int> get blockChain =>
+      $composableBuilder(
+          column: $table.blockChain, builder: (column) => column);
+
+  GeneratedColumn<String> get blockExplorerUrl => $composableBuilder(
+      column: $table.blockExplorerUrl, builder: (column) => column);
+
+  GeneratedColumn<int> get chainId =>
+      $composableBuilder(column: $table.chainId, builder: (column) => column);
+
+  GeneratedColumn<String> get currencySymbol => $composableBuilder(
+      column: $table.currencySymbol, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get url =>
+      $composableBuilder(column: $table.url, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<NetworkType, int> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  Expression<T> ethereumTxsRefs<T extends Object>(
+      Expression<T> Function($$EthereumTxsTableAnnotationComposer a) f) {
+    final $$EthereumTxsTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.ethereumTxs,
+        getReferencedColumn: (t) => t.network,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$EthereumTxsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.ethereumTxs,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<T> networkAssetsRefs<T extends Object>(
+      Expression<T> Function($$NetworkAssetsTableAnnotationComposer a) f) {
+    final $$NetworkAssetsTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.networkAssets,
+        getReferencedColumn: (t) => t.network,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$NetworkAssetsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.networkAssets,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
 }
 
 class $$AppNetworksTableTableManager extends RootTableManager<
@@ -2767,6 +2852,7 @@ class $$AppNetworksTableTableManager extends RootTableManager<
     AppNetwork,
     $$AppNetworksTableFilterComposer,
     $$AppNetworksTableOrderingComposer,
+    $$AppNetworksTableAnnotationComposer,
     $$AppNetworksTableCreateCompanionBuilder,
     $$AppNetworksTableUpdateCompanionBuilder,
     (AppNetwork, $$AppNetworksTableReferences),
@@ -2776,10 +2862,12 @@ class $$AppNetworksTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$AppNetworksTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$AppNetworksTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$AppNetworksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AppNetworksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AppNetworksTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<AppNetworkAssetEntries> assets = const Value.absent(),
             Value<int> id = const Value.absent(),
@@ -2842,7 +2930,8 @@ class $$AppNetworksTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (ethereumTxsRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<AppNetwork, $AppNetworksTable,
+                            EthereumTx>(
                         currentTable: table,
                         referencedTable: $$AppNetworksTableReferences
                             ._ethereumTxsRefsTable(db),
@@ -2854,7 +2943,8 @@ class $$AppNetworksTableTableManager extends RootTableManager<
                             referencedItems.where((e) => e.network == item.id),
                         typedResults: items),
                   if (networkAssetsRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<AppNetwork, $AppNetworksTable,
+                            NetworkAsset>(
                         currentTable: table,
                         referencedTable: $$AppNetworksTableReferences
                             ._networkAssetsRefsTable(db),
@@ -2878,6 +2968,7 @@ typedef $$AppNetworksTableProcessedTableManager = ProcessedTableManager<
     AppNetwork,
     $$AppNetworksTableFilterComposer,
     $$AppNetworksTableOrderingComposer,
+    $$AppNetworksTableAnnotationComposer,
     $$AppNetworksTableCreateCompanionBuilder,
     $$AppNetworksTableUpdateCompanionBuilder,
     (AppNetwork, $$AppNetworksTableReferences),
@@ -2897,51 +2988,69 @@ typedef $$BookmarksTableUpdateCompanionBuilder = BookmarksCompanion Function({
 });
 
 class $$BookmarksTableFilterComposer
-    extends FilterComposer<_$Database, $BookmarksTable> {
-  $$BookmarksTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$Database, $BookmarksTable> {
+  $$BookmarksTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get faviconUrl => $state.composableBuilder(
-      column: $state.table.faviconUrl,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get faviconUrl => $composableBuilder(
+      column: $table.faviconUrl, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get title => $state.composableBuilder(
-      column: $state.table.title,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get url => $state.composableBuilder(
-      column: $state.table.url,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get url => $composableBuilder(
+      column: $table.url, builder: (column) => ColumnFilters(column));
 }
 
 class $$BookmarksTableOrderingComposer
-    extends OrderingComposer<_$Database, $BookmarksTable> {
-  $$BookmarksTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$Database, $BookmarksTable> {
+  $$BookmarksTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get faviconUrl => $state.composableBuilder(
-      column: $state.table.faviconUrl,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get faviconUrl => $composableBuilder(
+      column: $table.faviconUrl, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get title => $state.composableBuilder(
-      column: $state.table.title,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get url => $state.composableBuilder(
-      column: $state.table.url,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get url => $composableBuilder(
+      column: $table.url, builder: (column) => ColumnOrderings(column));
+}
+
+class $$BookmarksTableAnnotationComposer
+    extends Composer<_$Database, $BookmarksTable> {
+  $$BookmarksTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get faviconUrl => $composableBuilder(
+      column: $table.faviconUrl, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get url =>
+      $composableBuilder(column: $table.url, builder: (column) => column);
 }
 
 class $$BookmarksTableTableManager extends RootTableManager<
@@ -2950,6 +3059,7 @@ class $$BookmarksTableTableManager extends RootTableManager<
     Bookmark,
     $$BookmarksTableFilterComposer,
     $$BookmarksTableOrderingComposer,
+    $$BookmarksTableAnnotationComposer,
     $$BookmarksTableCreateCompanionBuilder,
     $$BookmarksTableUpdateCompanionBuilder,
     (Bookmark, BaseReferences<_$Database, $BookmarksTable, Bookmark>),
@@ -2959,10 +3069,12 @@ class $$BookmarksTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$BookmarksTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$BookmarksTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$BookmarksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BookmarksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BookmarksTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String?> faviconUrl = const Value.absent(),
@@ -3000,6 +3112,7 @@ typedef $$BookmarksTableProcessedTableManager = ProcessedTableManager<
     Bookmark,
     $$BookmarksTableFilterComposer,
     $$BookmarksTableOrderingComposer,
+    $$BookmarksTableAnnotationComposer,
     $$BookmarksTableCreateCompanionBuilder,
     $$BookmarksTableUpdateCompanionBuilder,
     (Bookmark, BaseReferences<_$Database, $BookmarksTable, Bookmark>),
@@ -3040,10 +3153,11 @@ final class $$EthereumTxsTableReferences
       db.appNetworks.createAlias(
           $_aliasNameGenerator(db.ethereumTxs.network, db.appNetworks.id));
 
-  $$AppNetworksTableProcessedTableManager? get network {
-    if ($_item.network == null) return null;
+  $$AppNetworksTableProcessedTableManager get network {
+    final $_column = $_itemColumn<int>('network')!;
+
     final manager = $$AppNetworksTableTableManager($_db, $_db.appNetworks)
-        .filter((f) => f.id($_item.network!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_networkTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -3052,126 +3166,175 @@ final class $$EthereumTxsTableReferences
 }
 
 class $$EthereumTxsTableFilterComposer
-    extends FilterComposer<_$Database, $EthereumTxsTable> {
-  $$EthereumTxsTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$Database, $EthereumTxsTable> {
+  $$EthereumTxsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get from => $state.composableBuilder(
-      column: $state.table.from,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get from => $composableBuilder(
+      column: $table.from, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get gas => $state.composableBuilder(
-      column: $state.table.gas,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get gas => $composableBuilder(
+      column: $table.gas, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get hash => $state.composableBuilder(
-      column: $state.table.hash,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get hash => $composableBuilder(
+      column: $table.hash, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get input => $state.composableBuilder(
-      column: $state.table.input,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get input => $composableBuilder(
+      column: $table.input, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get to => $state.composableBuilder(
-      column: $state.table.to,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get to => $composableBuilder(
+      column: $table.to, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<BigInt> get value => $state.composableBuilder(
-      column: $state.table.value,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<BigInt> get value => $composableBuilder(
+      column: $table.value, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<DateTime> get txDateTime => $state.composableBuilder(
-      column: $state.table.txDateTime,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<DateTime> get txDateTime => $composableBuilder(
+      column: $table.txDateTime, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<EthereumTransactionStatus,
           EthereumTransactionStatus, int>
-      get status => $state.composableBuilder(
-          column: $state.table.status,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
+      get status => $composableBuilder(
+          column: $table.status,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
 
   $$AppNetworksTableFilterComposer get network {
-    final $$AppNetworksTableFilterComposer composer = $state.composerBuilder(
+    final $$AppNetworksTableFilterComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.network,
-        referencedTable: $state.db.appNetworks,
+        referencedTable: $db.appNetworks,
         getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) =>
-            $$AppNetworksTableFilterComposer(ComposerState($state.db,
-                $state.db.appNetworks, joinBuilder, parentComposers)));
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$AppNetworksTableFilterComposer(
+              $db: $db,
+              $table: $db.appNetworks,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return composer;
   }
 }
 
 class $$EthereumTxsTableOrderingComposer
-    extends OrderingComposer<_$Database, $EthereumTxsTable> {
-  $$EthereumTxsTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$Database, $EthereumTxsTable> {
+  $$EthereumTxsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get from => $state.composableBuilder(
-      column: $state.table.from,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get from => $composableBuilder(
+      column: $table.from, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get gas => $state.composableBuilder(
-      column: $state.table.gas,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get gas => $composableBuilder(
+      column: $table.gas, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get hash => $state.composableBuilder(
-      column: $state.table.hash,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get hash => $composableBuilder(
+      column: $table.hash, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get input => $state.composableBuilder(
-      column: $state.table.input,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get input => $composableBuilder(
+      column: $table.input, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get to => $state.composableBuilder(
-      column: $state.table.to,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get to => $composableBuilder(
+      column: $table.to, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<BigInt> get value => $state.composableBuilder(
-      column: $state.table.value,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<BigInt> get value => $composableBuilder(
+      column: $table.value, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<DateTime> get txDateTime => $state.composableBuilder(
-      column: $state.table.txDateTime,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<DateTime> get txDateTime => $composableBuilder(
+      column: $table.txDateTime, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get status => $state.composableBuilder(
-      column: $state.table.status,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnOrderings(column));
 
   $$AppNetworksTableOrderingComposer get network {
-    final $$AppNetworksTableOrderingComposer composer = $state.composerBuilder(
+    final $$AppNetworksTableOrderingComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.network,
-        referencedTable: $state.db.appNetworks,
+        referencedTable: $db.appNetworks,
         getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) =>
-            $$AppNetworksTableOrderingComposer(ComposerState($state.db,
-                $state.db.appNetworks, joinBuilder, parentComposers)));
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$AppNetworksTableOrderingComposer(
+              $db: $db,
+              $table: $db.appNetworks,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$EthereumTxsTableAnnotationComposer
+    extends Composer<_$Database, $EthereumTxsTable> {
+  $$EthereumTxsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get from =>
+      $composableBuilder(column: $table.from, builder: (column) => column);
+
+  GeneratedColumn<int> get gas =>
+      $composableBuilder(column: $table.gas, builder: (column) => column);
+
+  GeneratedColumn<String> get hash =>
+      $composableBuilder(column: $table.hash, builder: (column) => column);
+
+  GeneratedColumn<String> get input =>
+      $composableBuilder(column: $table.input, builder: (column) => column);
+
+  GeneratedColumn<String> get to =>
+      $composableBuilder(column: $table.to, builder: (column) => column);
+
+  GeneratedColumn<BigInt> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get txDateTime => $composableBuilder(
+      column: $table.txDateTime, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<EthereumTransactionStatus, int> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  $$AppNetworksTableAnnotationComposer get network {
+    final $$AppNetworksTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.network,
+        referencedTable: $db.appNetworks,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$AppNetworksTableAnnotationComposer(
+              $db: $db,
+              $table: $db.appNetworks,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return composer;
   }
 }
@@ -3182,6 +3345,7 @@ class $$EthereumTxsTableTableManager extends RootTableManager<
     EthereumTx,
     $$EthereumTxsTableFilterComposer,
     $$EthereumTxsTableOrderingComposer,
+    $$EthereumTxsTableAnnotationComposer,
     $$EthereumTxsTableCreateCompanionBuilder,
     $$EthereumTxsTableUpdateCompanionBuilder,
     (EthereumTx, $$EthereumTxsTableReferences),
@@ -3191,10 +3355,12 @@ class $$EthereumTxsTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$EthereumTxsTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$EthereumTxsTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$EthereumTxsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$EthereumTxsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$EthereumTxsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> from = const Value.absent(),
@@ -3264,6 +3430,7 @@ class $$EthereumTxsTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic,
+                      dynamic,
                       dynamic>>(state) {
                 if (network) {
                   state = state.withJoin(
@@ -3292,6 +3459,7 @@ typedef $$EthereumTxsTableProcessedTableManager = ProcessedTableManager<
     EthereumTx,
     $$EthereumTxsTableFilterComposer,
     $$EthereumTxsTableOrderingComposer,
+    $$EthereumTxsTableAnnotationComposer,
     $$EthereumTxsTableCreateCompanionBuilder,
     $$EthereumTxsTableUpdateCompanionBuilder,
     (EthereumTx, $$EthereumTxsTableReferences),
@@ -3329,10 +3497,11 @@ final class $$NetworkAssetsTableReferences
       db.appNetworks.createAlias(
           $_aliasNameGenerator(db.networkAssets.network, db.appNetworks.id));
 
-  $$AppNetworksTableProcessedTableManager? get network {
-    if ($_item.network == null) return null;
+  $$AppNetworksTableProcessedTableManager get network {
+    final $_column = $_itemColumn<int>('network')!;
+
     final manager = $$AppNetworksTableTableManager($_db, $_db.appNetworks)
-        .filter((f) => f.id($_item.network!));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_networkTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -3341,103 +3510,156 @@ final class $$NetworkAssetsTableReferences
 }
 
 class $$NetworkAssetsTableFilterComposer
-    extends FilterComposer<_$Database, $NetworkAssetsTable> {
-  $$NetworkAssetsTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$Database, $NetworkAssetsTable> {
+  $$NetworkAssetsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get contractAddressHex => $state.composableBuilder(
-      column: $state.table.contractAddressHex,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get contractAddressHex => $composableBuilder(
+      column: $table.contractAddressHex,
+      builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get decimals => $state.composableBuilder(
-      column: $state.table.decimals,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get decimals => $composableBuilder(
+      column: $table.decimals, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get logoUrl => $state.composableBuilder(
-      column: $state.table.logoUrl,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get logoUrl => $composableBuilder(
+      column: $table.logoUrl, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get symbol => $state.composableBuilder(
-      column: $state.table.symbol,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get symbol => $composableBuilder(
+      column: $table.symbol, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get isCurrency => $state.composableBuilder(
-      column: $state.table.isCurrency,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<bool> get isCurrency => $composableBuilder(
+      column: $table.isCurrency, builder: (column) => ColumnFilters(column));
 
   $$AppNetworksTableFilterComposer get network {
-    final $$AppNetworksTableFilterComposer composer = $state.composerBuilder(
+    final $$AppNetworksTableFilterComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.network,
-        referencedTable: $state.db.appNetworks,
+        referencedTable: $db.appNetworks,
         getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) =>
-            $$AppNetworksTableFilterComposer(ComposerState($state.db,
-                $state.db.appNetworks, joinBuilder, parentComposers)));
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$AppNetworksTableFilterComposer(
+              $db: $db,
+              $table: $db.appNetworks,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return composer;
   }
 }
 
 class $$NetworkAssetsTableOrderingComposer
-    extends OrderingComposer<_$Database, $NetworkAssetsTable> {
-  $$NetworkAssetsTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$Database, $NetworkAssetsTable> {
+  $$NetworkAssetsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get contractAddressHex => $state.composableBuilder(
-      column: $state.table.contractAddressHex,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get contractAddressHex => $composableBuilder(
+      column: $table.contractAddressHex,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get decimals => $state.composableBuilder(
-      column: $state.table.decimals,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get decimals => $composableBuilder(
+      column: $table.decimals, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get logoUrl => $state.composableBuilder(
-      column: $state.table.logoUrl,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get logoUrl => $composableBuilder(
+      column: $table.logoUrl, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get symbol => $state.composableBuilder(
-      column: $state.table.symbol,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get symbol => $composableBuilder(
+      column: $table.symbol, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get isCurrency => $state.composableBuilder(
-      column: $state.table.isCurrency,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<bool> get isCurrency => $composableBuilder(
+      column: $table.isCurrency, builder: (column) => ColumnOrderings(column));
 
   $$AppNetworksTableOrderingComposer get network {
-    final $$AppNetworksTableOrderingComposer composer = $state.composerBuilder(
+    final $$AppNetworksTableOrderingComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.network,
-        referencedTable: $state.db.appNetworks,
+        referencedTable: $db.appNetworks,
         getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) =>
-            $$AppNetworksTableOrderingComposer(ComposerState($state.db,
-                $state.db.appNetworks, joinBuilder, parentComposers)));
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$AppNetworksTableOrderingComposer(
+              $db: $db,
+              $table: $db.appNetworks,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$NetworkAssetsTableAnnotationComposer
+    extends Composer<_$Database, $NetworkAssetsTable> {
+  $$NetworkAssetsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get contractAddressHex => $composableBuilder(
+      column: $table.contractAddressHex, builder: (column) => column);
+
+  GeneratedColumn<int> get decimals =>
+      $composableBuilder(column: $table.decimals, builder: (column) => column);
+
+  GeneratedColumn<String> get logoUrl =>
+      $composableBuilder(column: $table.logoUrl, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get symbol =>
+      $composableBuilder(column: $table.symbol, builder: (column) => column);
+
+  GeneratedColumn<bool> get isCurrency => $composableBuilder(
+      column: $table.isCurrency, builder: (column) => column);
+
+  $$AppNetworksTableAnnotationComposer get network {
+    final $$AppNetworksTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.network,
+        referencedTable: $db.appNetworks,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$AppNetworksTableAnnotationComposer(
+              $db: $db,
+              $table: $db.appNetworks,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return composer;
   }
 }
@@ -3448,6 +3670,7 @@ class $$NetworkAssetsTableTableManager extends RootTableManager<
     NetworkAsset,
     $$NetworkAssetsTableFilterComposer,
     $$NetworkAssetsTableOrderingComposer,
+    $$NetworkAssetsTableAnnotationComposer,
     $$NetworkAssetsTableCreateCompanionBuilder,
     $$NetworkAssetsTableUpdateCompanionBuilder,
     (NetworkAsset, $$NetworkAssetsTableReferences),
@@ -3457,10 +3680,12 @@ class $$NetworkAssetsTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$NetworkAssetsTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$NetworkAssetsTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$NetworkAssetsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$NetworkAssetsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$NetworkAssetsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String?> contractAddressHex = const Value.absent(),
@@ -3522,6 +3747,7 @@ class $$NetworkAssetsTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic,
+                      dynamic,
                       dynamic>>(state) {
                 if (network) {
                   state = state.withJoin(
@@ -3550,6 +3776,7 @@ typedef $$NetworkAssetsTableProcessedTableManager = ProcessedTableManager<
     NetworkAsset,
     $$NetworkAssetsTableFilterComposer,
     $$NetworkAssetsTableOrderingComposer,
+    $$NetworkAssetsTableAnnotationComposer,
     $$NetworkAssetsTableCreateCompanionBuilder,
     $$NetworkAssetsTableUpdateCompanionBuilder,
     (NetworkAsset, $$NetworkAssetsTableReferences),
@@ -3575,73 +3802,89 @@ typedef $$WalletNotificationsTableUpdateCompanionBuilder
 });
 
 class $$WalletNotificationsTableFilterComposer
-    extends FilterComposer<_$Database, $WalletNotificationsTable> {
-  $$WalletNotificationsTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$Database, $WalletNotificationsTable> {
+  $$WalletNotificationsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<DateTime> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get title => $state.composableBuilder(
-      column: $state.table.title,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get details => $state.composableBuilder(
-      column: $state.table.details,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get details => $composableBuilder(
+      column: $table.details, builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<NotificationType, NotificationType, int>
-      get type => $state.composableBuilder(
-          column: $state.table.type,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
+      get type => $composableBuilder(
+          column: $table.type,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
 
-  ColumnFilters<bool> get isRead => $state.composableBuilder(
-      column: $state.table.isRead,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<bool> get isRead => $composableBuilder(
+      column: $table.isRead, builder: (column) => ColumnFilters(column));
 }
 
 class $$WalletNotificationsTableOrderingComposer
-    extends OrderingComposer<_$Database, $WalletNotificationsTable> {
-  $$WalletNotificationsTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$Database, $WalletNotificationsTable> {
+  $$WalletNotificationsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<DateTime> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get title => $state.composableBuilder(
-      column: $state.table.title,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get details => $state.composableBuilder(
-      column: $state.table.details,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get details => $composableBuilder(
+      column: $table.details, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get type => $state.composableBuilder(
-      column: $state.table.type,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get type => $composableBuilder(
+      column: $table.type, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get isRead => $state.composableBuilder(
-      column: $state.table.isRead,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<bool> get isRead => $composableBuilder(
+      column: $table.isRead, builder: (column) => ColumnOrderings(column));
+}
+
+class $$WalletNotificationsTableAnnotationComposer
+    extends Composer<_$Database, $WalletNotificationsTable> {
+  $$WalletNotificationsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get details =>
+      $composableBuilder(column: $table.details, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<NotificationType, int> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<bool> get isRead =>
+      $composableBuilder(column: $table.isRead, builder: (column) => column);
 }
 
 class $$WalletNotificationsTableTableManager extends RootTableManager<
@@ -3650,6 +3893,7 @@ class $$WalletNotificationsTableTableManager extends RootTableManager<
     WalletNotification,
     $$WalletNotificationsTableFilterComposer,
     $$WalletNotificationsTableOrderingComposer,
+    $$WalletNotificationsTableAnnotationComposer,
     $$WalletNotificationsTableCreateCompanionBuilder,
     $$WalletNotificationsTableUpdateCompanionBuilder,
     (
@@ -3663,10 +3907,14 @@ class $$WalletNotificationsTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer: $$WalletNotificationsTableFilterComposer(
-              ComposerState(db, table)),
-          orderingComposer: $$WalletNotificationsTableOrderingComposer(
-              ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$WalletNotificationsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WalletNotificationsTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WalletNotificationsTableAnnotationComposer(
+                  $db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<DateTime> createdAt = const Value.absent(),
@@ -3712,6 +3960,7 @@ typedef $$WalletNotificationsTableProcessedTableManager = ProcessedTableManager<
     WalletNotification,
     $$WalletNotificationsTableFilterComposer,
     $$WalletNotificationsTableOrderingComposer,
+    $$WalletNotificationsTableAnnotationComposer,
     $$WalletNotificationsTableCreateCompanionBuilder,
     $$WalletNotificationsTableUpdateCompanionBuilder,
     (
