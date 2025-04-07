@@ -24,14 +24,14 @@ class WalletNotificationsDao extends DatabaseAccessor<Database>
     return deleteById(walletNotification.id);
   }
 
-  Future<int> insert(WalletNotificationsCompanion notification) async {
+  Future<int> insert(WalletNotificationsCompanion notification) {
     return into(walletNotifications).insert(notification);
   }
 
   Stream<List<WalletNotification>> listen() =>
       select(walletNotifications).watch();
 
-  Future<int> markAllAsRead() async {
+  Future<int> markAllAsRead() {
     return update(walletNotifications).write(
       const WalletNotificationsCompanion(
         isRead: Value(true),

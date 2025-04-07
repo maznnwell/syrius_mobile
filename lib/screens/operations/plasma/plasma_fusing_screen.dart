@@ -250,7 +250,7 @@ class _PlasmaFusingScreenState extends State<PlasmaFusingScreen> {
       child: SyriusFilledButton.color(
         color: qsrColor,
         text: AppLocalizations.of(context)!.confirm,
-        onPressed: () async {
+        onPressed: () {
           _plasmaOptionsBloc.generatePlasma(
             _recipientController.text,
             _amountController.text.extractDecimals(coinDecimals),

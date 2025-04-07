@@ -37,7 +37,7 @@ class CommonMethods {
           ),
         ],
       ),
-      onYesButtonPressed: () async {},
+      onYesButtonPressed: () {},
       onNoButtonPressed: () {},
     );
 

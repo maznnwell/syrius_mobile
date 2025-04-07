@@ -340,7 +340,7 @@ class _SendEthScreenState extends State<SendEthScreen> {
           rightContent: '$_amount ${_selectedAsset.symbol}',
         ),
         TextButton(
-          onPressed: () async {
+          onPressed: () {
             showEditGasFeeScreen(
               context: context,
               data: gasDetails,

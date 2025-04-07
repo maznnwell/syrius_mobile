@@ -370,7 +370,7 @@ class _WebViewScreenState extends State<WebViewScreen>
       },
       initialOptions: InAppWebViewGroupOptions(
         android: AndroidInAppWebViewOptions(
-          useHybridComposition: true,
+          
         ),
         crossPlatform: InAppWebViewOptions(
           useShouldOverrideUrlLoading: true,

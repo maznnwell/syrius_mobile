@@ -79,6 +79,8 @@ dependencies:
       url: https://github.com/drblazer21/znn_sdk_dart/
       ref: mobile-support
 
+  json_annotation: any
+  path: any
 dev_dependencies: 
   build_runner: ^2.4.12
   dependency_validator: ^4.0.0

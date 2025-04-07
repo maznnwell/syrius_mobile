@@ -212,17 +212,17 @@ class Web3WalletService extends IWeb3WalletService {
     return _web3Wallet!.getActiveSessions();
   }
 
-  Future<void> _onRelayClientConnect(var args) async {
+  Future<void> _onRelayClientConnect(dynamic args) async {
     Logger('WalletConnectService')
         .log(Level.INFO, '_onRelayClientConnect triggered', args.toString());
   }
 
-  Future<void> _onRelayClientDisconnect(var args) async {
+  Future<void> _onRelayClientDisconnect(dynamic args) async {
     Logger('WalletConnectService')
         .log(Level.INFO, '_onRelayClientDisconnect triggered', args.toString());
   }
 
-  Future<void> _onRelayClientError(var args) async {
+  Future<void> _onRelayClientError(dynamic args) async {
     Logger('WalletConnectService')
         .log(Level.INFO, '_onRelayClientError triggered', args.toString());
   }
@@ -327,8 +327,8 @@ class Web3WalletService extends IWeb3WalletService {
             ...views,
           ],
         ),
-        onYesButtonPressed: () async {},
-        onNoButtonPressed: () async {},
+        onYesButtonPressed: () {},
+        onNoButtonPressed: () {},
       );
 
       if (actionWasAccepted ?? false) {
@@ -407,8 +407,8 @@ class Web3WalletService extends IWeb3WalletService {
       final bool? rs = await showDialogWithNoAndYesOptions<bool>(
         context: navState.currentContext!,
         title: '${args.requester.metadata.name} would like to connect',
-        onYesButtonPressed: () async {},
-        onNoButtonPressed: () async {},
+        onYesButtonPressed: () {},
+        onNoButtonPressed: () {},
         content: Column(
           children: formattedMessages
               .map(
@@ -483,8 +483,8 @@ class Web3WalletService extends IWeb3WalletService {
       final bool? rs = await showDialogWithNoAndYesOptions<bool>(
         context: navState.currentContext!,
         title: '${args.requester.metadata.name} would like to connect',
-        onYesButtonPressed: () async {},
-        onNoButtonPressed: () async {},
+        onYesButtonPressed: () {},
+        onNoButtonPressed: () {},
         content: Text(message),
       );
 
@@ -529,7 +529,7 @@ class Web3WalletService extends IWeb3WalletService {
 
   Future<ApproveResponse> _approveSession({
     required SessionProposalEvent event,
-  }) async {
+  }) {
     return _web3Wallet!.approveSession(
       id: event.id,
       namespaces: event.params.generatedNamespaces!,

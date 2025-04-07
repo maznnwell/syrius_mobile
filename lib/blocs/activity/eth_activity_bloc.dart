@@ -5,7 +5,7 @@ import 'package:syrius_mobile/utils/global.dart';
 
 class EthActivityBloc extends InfiniteScrollBloc<EthereumTx> {
   @override
-  Future<List<EthereumTx>> getData(int pageKey, int pageSize) async {
+  Future<List<EthereumTx>> getData(int pageKey, int pageSize) {
     return db.ethereumTxsDao.getItems(
       address: kEthSelectedAddress!.hex,
       pageNumber: pageKey,

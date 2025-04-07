@@ -251,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Token? token;
 
               if (uri.hasQuery) {
-                uri.queryParametersAll.forEach((key, value) async {
+                uri.queryParametersAll.forEach((key, value) {
                   if (key == 'amount') {
                     queryAmount = value.first;
                   } else if (key == 'zts') {
@@ -455,7 +455,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             type: NotificationType.paymentReceived,
                           ),
                         );
-                    break;
                 }
               }
               return;

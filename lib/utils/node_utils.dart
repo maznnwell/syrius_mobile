@@ -101,7 +101,7 @@ void addOnWebSocketConnectedCallback() {
 Future<void> addUnreceivedTransactions() async {
   await Future.forEach<AppAddress>(
     kDefaultAddressList,
-    (appAddress) async {
+    (appAddress) {
       final Address address = appAddress.toZnnAddress();
 
       return addUnreceivedTransactionsByAddress(address);

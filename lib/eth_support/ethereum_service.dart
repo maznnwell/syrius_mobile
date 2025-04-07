@@ -122,7 +122,7 @@ class EthereumServiceImpl implements EthereumService {
     required String from,
     required String to,
     Uint8List? data,
-  }) async {
+  }) {
     return _client!.estimateGas(
       sender: EthereumAddress.fromHex(from),
       to: EthereumAddress.fromHex(to),

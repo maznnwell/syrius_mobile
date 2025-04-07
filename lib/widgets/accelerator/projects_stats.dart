@@ -91,7 +91,7 @@ class ProjectsStats extends StatelessWidget {
             : project.getPaidZnnFunds() / project.znnFundsNeeded,
       ),
       _getBalanceChartSection(
-        znnColor.withOpacity(0.2),
+        znnColor.withAlpha((255.0 * 0.2).round()),
         project.znnFundsNeeded == BigInt.zero
             ? 0
             : project.getRemainingZnnFunds() / project.znnFundsNeeded,
@@ -108,7 +108,7 @@ class ProjectsStats extends StatelessWidget {
             : project.getPaidQsrFunds() / project.qsrFundsNeeded,
       ),
       _getBalanceChartSection(
-        qsrColor.withOpacity(0.5),
+        qsrColor.withAlpha((255.0 * 0.5).round()),
         project.qsrFundsNeeded == BigInt.zero
             ? 0
             : project.getRemainingQsrFunds() / project.qsrFundsNeeded,
@@ -147,7 +147,7 @@ class ProjectsStats extends StatelessWidget {
             ),
           ),
           ChartLegend(
-            dotColor: znnColor.withOpacity(0.2),
+            dotColor: znnColor.withAlpha((255.0 * 0.2).round()),
             mainText: 'Remaining',
             detailsWidget: FormattedAmountWithTooltip(
               amount: project
@@ -161,7 +161,7 @@ class ProjectsStats extends StatelessWidget {
             ),
           ),
           ChartLegend(
-            dotColor: znnColor.withOpacity(0.4),
+            dotColor: znnColor.withAlpha((255.0 * 0.4).round()),
             mainText: 'Total',
             detailsWidget: FormattedAmountWithTooltip(
               amount:
@@ -199,7 +199,7 @@ class ProjectsStats extends StatelessWidget {
             ),
           ),
           ChartLegend(
-            dotColor: qsrColor.withOpacity(0.2),
+            dotColor: qsrColor.withAlpha((255.0 * 0.2).round()),
             mainText: 'Remaining',
             detailsWidget: FormattedAmountWithTooltip(
               amount: project
@@ -213,7 +213,7 @@ class ProjectsStats extends StatelessWidget {
             ),
           ),
           ChartLegend(
-            dotColor: qsrColor.withOpacity(0.4),
+            dotColor: qsrColor.withAlpha((255.0 * 0.4).round()),
             mainText: 'Total',
             detailsWidget: FormattedAmountWithTooltip(
               amount:

@@ -133,7 +133,7 @@ class _GenericPagePlasmaInfoState extends State<GenericPagePlasmaInfo> {
       ),
       child: WarningWidget(
         iconData: Icons.info,
-        fillColor: plasmaColor.withOpacity(0.3),
+        fillColor: plasmaColor.withAlpha((255.0 * 0.3).round()),
         textColor: plasmaColor,
         text: AppLocalizations.of(context)!.plasmaModalLowDescription,
       ),

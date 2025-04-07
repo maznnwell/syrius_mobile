@@ -261,7 +261,7 @@ class InformationScreenState extends State<InformationScreen> {
     );
   }
 
-  Future<List<Directory>> _initMainAndCacheFields() async {
+  Future<List<Directory>> _initMainAndCacheFields() {
     return Future.wait([
       znnDefaultMainDirectory,
       znnDefaultCacheDirectory,

@@ -53,7 +53,7 @@ class AutoReceiveTxWorker extends BaseBloc<WalletNotification> with RefreshBlocM
         transactionParams,
         'receive transaction',
         blockSigningAddress: toAddress,
-        generatingPowCallback: (status) async {
+        generatingPowCallback: (status) {
           addEventToPowGeneratingStatusBloc(status);
         },
         waitForRequiredPlasma: true,

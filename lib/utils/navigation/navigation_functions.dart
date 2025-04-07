@@ -348,7 +348,7 @@ Future<dynamic> showEditBtcTxFeePerByt({
   required double feePerByte,
   required BigInt txValue,
   required int txSize,
-}) async =>
+}) =>
     _push(
       context,
       EditBtcTxFeePerByteScreen(

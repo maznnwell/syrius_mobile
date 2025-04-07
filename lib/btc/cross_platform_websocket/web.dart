@@ -41,7 +41,7 @@ class WebsocketWeb implements WebSocketCore {
   static Future<WebsocketWeb> connect(
     String url, {
     List<String>? protocols,
-  }) async {
+  }) {
     final completer = Completer<WebsocketWeb>();
     final socket = WebSocket(url, protocols);
     WebsocketWeb._(socket)._connectedCompleter.future.then((_) {

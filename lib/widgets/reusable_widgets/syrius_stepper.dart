@@ -438,7 +438,7 @@ class _SyriusStepperState extends State<SyriusStepper> with TickerProviderStateM
       return resolvedConnectorColor;
     }
     if (!_isDark()) {
-      return isActive ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.38);
+      return isActive ? colorScheme.primary : colorScheme.onSurface.withAlpha((255.0 * 0.38).round());
     } else {
       return isActive ? colorScheme.secondary : colorScheme.surface;
     }

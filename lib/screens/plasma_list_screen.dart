@@ -134,7 +134,7 @@ class _PlasmaListItemState extends State<PlasmaListItem> {
 
   Widget _buildLeading() {
     return CircleAvatar(
-      backgroundColor: qsrColor.withOpacity(0.2),
+      backgroundColor: qsrColor.withAlpha((255.0 * 0.2).round()),
       child: const Icon(
         Icons.flash_on,
         color: qsrColor,

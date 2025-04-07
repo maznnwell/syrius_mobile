@@ -16,7 +16,6 @@ import 'package:local_auth/local_auth.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:retry/retry.dart';
-import 'package:secp256r1/secp256r1.dart';
 import 'package:secure_content/secure_content.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syrius_mobile/blocs/blocs.dart';
@@ -228,7 +227,7 @@ Future<void> initGlobalServices() async {
       sharedPrefs.getInt(kSelectedAppNetworkIdKey);
 
   final AppNetwork selectedAppNetwork = await db.managers.appNetworks
-      .filter((f) => f.id(selectedAppNetworkId!))
+      .filter((f) => f.id(selectedAppNetworkId))
       .getSingle();
 
   final List<NetworkAsset> selectAppNetworkAssets =

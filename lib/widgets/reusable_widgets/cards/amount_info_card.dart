@@ -130,7 +130,7 @@ class AmountInfoCard extends StatelessWidget {
 
   Widget _buildLeadingIcon(Token token) {
     final Color iconColor = getTokenColor(token);
-    final Color bgColor = getTokenColor(token).withOpacity(0.3);
+    final Color bgColor = getTokenColor(token).withAlpha((255.0 * 0.3).round());
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
