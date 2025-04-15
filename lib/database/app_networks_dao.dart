@@ -12,7 +12,7 @@ class AppNetworksDao extends DatabaseAccessor<Database>
   Future<int> deleteData(Insertable<AppNetwork> network) =>
       delete(appNetworks).delete(network);
 
-  Future<int> insert(AppNetworksCompanion network) async {
+  Future<int> insert(AppNetworksCompanion network) {
     return into(appNetworks).insert(network);
   }
 
@@ -22,7 +22,7 @@ class AppNetworksDao extends DatabaseAccessor<Database>
     });
   }
 
-  Future<bool> updateData(Insertable<AppNetwork> network) async {
+  Future<bool> updateData(Insertable<AppNetwork> network) {
     return update(appNetworks).replace(network);
   }
 

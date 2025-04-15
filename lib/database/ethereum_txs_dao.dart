@@ -18,7 +18,7 @@ class EthereumTxsDao extends DatabaseAccessor<Database>
     required String address,
     required int pageNumber,
     required int itemsPerPage,
-  }) async {
+  }) {
     final offset = pageNumber * itemsPerPage;
     final int networkId = kSelectedAppNetworkWithAssets!.network.id;
     return (select(ethereumTxs)
@@ -43,7 +43,7 @@ class EthereumTxsDao extends DatabaseAccessor<Database>
     required TransactionInformation info,
     required DateTime dateTime,
     required EthereumTransactionStatus status,
-  }) async {
+  }) {
     final EthereumTxsCompanion ethereumTxsCompanion =
         EthereumTxsCompanion.insert(
       from: info.from.hex,

@@ -9,11 +9,11 @@ class NetworkAssetsDao extends DatabaseAccessor<Database>
     with _$NetworkAssetsDaoMixin {
   NetworkAssetsDao(super.db);
 
-  Future<List<NetworkAsset>> getAllByNetworkId(int id) async {
+  Future<List<NetworkAsset>> getAllByNetworkId(int id) {
     return (select(networkAssets)..where((f) => f.network.equals(id))).get();
   }
 
-  Future<int> insert(NetworkAssetsCompanion asset) async {
+  Future<int> insert(NetworkAssetsCompanion asset) {
     final NetworkAssetsCompanion updatedAppAddress = _generateNetworkAssetWithCurrency(asset);
 
     return into(networkAssets).insert(updatedAppAddress);
@@ -25,7 +25,7 @@ class NetworkAssetsDao extends DatabaseAccessor<Database>
     });
   }
 
-  Future<bool> updateData(NetworkAssetsCompanion asset) async {
+  Future<bool> updateData(NetworkAssetsCompanion asset) {
     final NetworkAssetsCompanion updatedAppAddress = _generateNetworkAssetWithCurrency(asset);
 
     return update(networkAssets).replace(updatedAppAddress);

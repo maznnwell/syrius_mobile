@@ -363,14 +363,14 @@ class _WebViewScreenState extends State<WebViewScreen>
           callback: (args) {
             final String url = args[0] as String;
             controller.loadUrl(
-              urlRequest: URLRequest(url: Uri.parse(url)),
+              urlRequest: URLRequest(url: WebUri.uri(Uri.parse(url))),
             );
           },
         );
       },
       initialOptions: InAppWebViewGroupOptions(
         android: AndroidInAppWebViewOptions(
-          useHybridComposition: true,
+          
         ),
         crossPlatform: InAppWebViewOptions(
           useShouldOverrideUrlLoading: true,
@@ -617,7 +617,7 @@ class _WebViewScreenState extends State<WebViewScreen>
           }
           _controller.loadUrl(
             urlRequest: URLRequest(
-              url: Uri.parse(finalUrl),
+              url: WebUri.uri(Uri.parse(finalUrl)),
             ),
           );
         },

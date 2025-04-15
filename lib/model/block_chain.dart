@@ -34,9 +34,9 @@ enum BlockChain {
       case btc:
         return const Color(0xFFF7931A);
       case nom:
-        return znnColor.withOpacity(0.3);
+        return znnColor.withAlpha((255.0 * 0.3).round());
       case evm:
-        return Colors.white.withOpacity(0.7);
+        return Colors.white.withAlpha((255.0 * 0.7).round());
     }
   }
 

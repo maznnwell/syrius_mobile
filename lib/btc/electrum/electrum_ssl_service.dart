@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:bitcoin_base/bitcoin_base.dart';
+import 'package:blockchain_utils/service/models/params.dart';
 import 'package:syrius_mobile/btc/electrum/request_completer.dart';
 
-class ElectrumSSLService with BitcoinBaseElectrumRPCService {
+class ElectrumSSLService with ElectrumServiceProvider {
   ElectrumSSLService._(
     this.url,
     SecureSocket channel, {
@@ -23,7 +24,6 @@ class ElectrumSSLService with BitcoinBaseElectrumRPCService {
 
   bool get isConnected => _isDisconnect;
 
-  @override
   final String url;
 
   void add(List<int> params) {
@@ -77,21 +77,20 @@ class ElectrumSSLService with BitcoinBaseElectrumRPCService {
   }
 
   @override
-  Future<Map<String, dynamic>> call(
-    ElectrumRequestDetails params, [
+  Future<BaseServiceResponse<T>> doRequest<T>(
+    ElectrumRequestDetails params, {
     Duration? timeout,
-  ]) async {
+  }) async {
     final AsyncRequestCompleter compeleter =
         AsyncRequestCompleter(params.params);
-
     try {
-      requests[params.id] = compeleter;
+      requests[params.requestID] = compeleter;
       add(params.toTCPParams());
       final result = await compeleter.completer.future
           .timeout(timeout ?? defaultRequestTimeOut);
-      return result;
+      return params.toResponse(result);
     } finally {
-      requests.remove(params.id);
+      requests.remove(params.requestID);
     }
   }
 }

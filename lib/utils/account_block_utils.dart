@@ -66,7 +66,7 @@ Future<AccountBlockTemplate> createAccountBlock(
       final AccountBlockTemplate response = await zenon.send(
         transactionParams,
         currentKeyPair: blockSigningKeyPair,
-        generatingPowCallback: (status) async {
+        generatingPowCallback: (status) {
           addEventToPowGeneratingStatusBloc(status);
         },
         waitForRequiredPlasma: waitForRequiredPlasma,

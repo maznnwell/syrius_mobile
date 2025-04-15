@@ -24,7 +24,8 @@ if (flutterVersionName == null) {
 }
 
 android {
-    compileSdkVersion 34
+    namespace = "network.zenon.syrius.mobile"
+    compileSdkVersion 36
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -46,9 +47,9 @@ android {
 
     defaultConfig {
         applicationId "network.zenon.syrius.mobile"
-        targetSdkVersion 34
+        targetSdkVersion 36
         minSdkVersion 24
-        ndkVersion '21.2.6472646'
+        ndkVersion '27.0.12077973'
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true

@@ -141,7 +141,7 @@ class NoMService {
             ),
           ],
         ),
-        onYesButtonPressed: () async {},
+        onYesButtonPressed: () {},
         onNoButtonPressed: () {},
       );
 
@@ -212,8 +212,8 @@ class NoMService {
             ),
           ],
         ),
-        onYesButtonPressed: () async {},
-        onNoButtonPressed: () async {},
+        onYesButtonPressed: () {},
+        onNoButtonPressed: () {},
       );
 
       if (actionWasAccepted ?? false) {

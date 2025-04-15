@@ -95,7 +95,7 @@ class AllNetworks extends StatelessWidget {
 
     final BorderRadius borderRadius = BorderRadius.circular(16.0);
     final Color selectedTileColor =
-        appNetwork.blockChain.bgColor.withOpacity(0.1);
+        appNetwork.blockChain.bgColor.withAlpha((255.0 * 0.1).round());
 
     return ListTile(
       leading: CircleAvatar(
@@ -104,7 +104,7 @@ class AllNetworks extends StatelessWidget {
           iconFileName: appNetwork.blockChain.iconFileName,
         ),
       ),
-      onTap: () async {
+      onTap: () {
         final PowStatus? lastPowStatus =
             sl.get<PowGeneratingStatusBloc>().lastValue;
         final bool isPowBeingGenerated = lastPowStatus == PowStatus.generating;

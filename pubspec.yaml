@@ -7,26 +7,26 @@ environment:
   sdk: '>=3.2.0 <4.0.0'
 
 dependencies: 
-  ai_barcode_scanner: ^5.1.1+2
+  ai_barcode_scanner: ^6.0.1
   animate_gradient: ^0.0.3
   app_integrity_checker: ^1.0.5
   app_links: ^6.1.3
-  app_settings: ^5.1.1
+  app_settings: ^6.1.1
   argon2_ffi_base: ^1.1.1
   big_decimal: ^0.5.0
   bip39: any
-  bitcoin_base: ^4.7.0
-  blockchain_utils: ^3.3.0
+  bitcoin_base: ^6.1.0
+  blockchain_utils: ^4.3.0
   cached_network_image: ^3.3.0
   collection: any
   cryptography: ^2.7.0
   dart_bip32_bip44: ^0.2.0
   dotted_border: ^2.1.0
   drift: ^2.20.0
-  drift_flutter: ^0.1.0
+  drift_flutter: ^0.2.4
   eip1559: ^0.6.2
   eth_sig_util: ^0.0.9
-  fl_chart: ^0.68.0
+  fl_chart: ^0.70.2
   flutter: 
     sdk: flutter
   flutter_displaymode: ^0.6.0
@@ -38,7 +38,7 @@ dependencies:
   flutter_svg: ^2.0.1
   flutterlifecyclehooks: ^5.0.0
   font_awesome_flutter: ^10.7.0
-  get_it: ^7.2.0
+  get_it: ^8.0.3
   hex: ^0.2.0
   http: ^1.1.2
   infinite_scroll_pagination: ^4.0.0
@@ -59,8 +59,8 @@ dependencies:
   secp256r1: 
     git: 
       url: https://github.com/drblazer21/flutter_secp256r1/
-      ref: fc59b0a4a1b7729a02c86b538e40b39dd9a96e71
-  secure_content: ^0.1.0
+      ref: main
+  secure_content: ^1.0.0
   share_plus: ^10.0.0
   shared_preferences: ^2.2.3
   skeletonizer: ^1.1.2+1
@@ -69,13 +69,18 @@ dependencies:
   tuple: ^2.0.2
   url_launcher: ^6.0.20
   walletconnect_flutter_v2: ^2.3.1
-  web3_provider: ^1.1.4
+  web3_provider:
+    git:
+      url: https://github.com/maznnwell/flutter-web3-provider
+      ref: main
   web3dart: ^2.7.1
   znn_sdk_dart:
     git:
       url: https://github.com/drblazer21/znn_sdk_dart/
       ref: mobile-support
 
+  json_annotation: any
+  path: any
 dev_dependencies: 
   build_runner: ^2.4.12
   dependency_validator: ^4.0.0
@@ -86,7 +91,7 @@ dev_dependencies:
   pubspec_dependency_sorter: ^1.0.4
 
 dependency_overrides:
-  dart_style: 2.3.6
+  screen_capture_event: 1.2.0
   web: ^0.5.0
 
 flutter: 

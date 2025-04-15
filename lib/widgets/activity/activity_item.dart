@@ -105,7 +105,7 @@ class _ActivityItemState extends State<ActivityItem> {
 
     if (BlockUtils.isSendBlock(block.blockType)) {
       _iconColor = _getBlockColor(pairedBlock);
-      _backgroundColor = _getBlockColor(pairedBlock).withOpacity(0.2);
+      _backgroundColor = _getBlockColor(pairedBlock).withAlpha((255.0 * 0.2).round());
       leadingIcon = Icon(
         Icons.arrow_upward,
         color: _iconColor,
@@ -114,7 +114,7 @@ class _ActivityItemState extends State<ActivityItem> {
     }
     if (BlockUtils.isReceiveBlock(block.blockType)) {
       _iconColor = _getBlockColor(pairedBlock);
-      _backgroundColor = _getBlockColor(pairedBlock).withOpacity(0.2);
+      _backgroundColor = _getBlockColor(pairedBlock).withAlpha((255.0 * 0.2).round());
       leadingIcon = Icon(
         Icons.arrow_downward,
         color: _iconColor,
@@ -126,7 +126,7 @@ class _ActivityItemState extends State<ActivityItem> {
 
     if (address == plasmaAddress.toString()) {
       _iconColor = qsrColor;
-      _backgroundColor = qsrColor.withOpacity(0.2);
+      _backgroundColor = qsrColor.withAlpha((255.0 * 0.2).round());
       leadingIcon = Icon(
         Icons.flash_on,
         color: _iconColor,
@@ -134,7 +134,7 @@ class _ActivityItemState extends State<ActivityItem> {
       );
     } else if (address == stakeAddress.toString()) {
       _iconColor = znnColor;
-      _backgroundColor = znnColor.withOpacity(0.2);
+      _backgroundColor = znnColor.withAlpha((255.0 * 0.2).round());
       leadingIcon = SvgIcon(
         iconFileName: 'staked',
         iconColor: _iconColor,
@@ -142,7 +142,7 @@ class _ActivityItemState extends State<ActivityItem> {
       );
     } else if (address == pillarAddress.toString()) {
       _iconColor = znnColor;
-      _backgroundColor = znnColor.withOpacity(0.2);
+      _backgroundColor = znnColor.withAlpha((255.0 * 0.2).round());
       leadingIcon = SvgIcon(
         iconFileName: 'pillar',
         iconColor: _iconColor,
@@ -150,7 +150,7 @@ class _ActivityItemState extends State<ActivityItem> {
       );
     } else if (address == sentinelAddress.toString()) {
       _iconColor = znnColor;
-      _backgroundColor = znnColor.withOpacity(0.2);
+      _backgroundColor = znnColor.withAlpha((255.0 * 0.2).round());
       leadingIcon = SvgIcon(
         iconFileName: 'zn_icon',
         iconColor: _iconColor,

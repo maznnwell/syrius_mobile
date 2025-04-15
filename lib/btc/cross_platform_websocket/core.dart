@@ -14,6 +14,6 @@ abstract class WebSocketCore {
   static Future<WebSocketCore> connect(
     String url, {
     List<String>? protocols,
-  }) async =>
+  }) =>
       connectSoc(url, protocols: protocols);
 }

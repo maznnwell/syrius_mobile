@@ -96,7 +96,7 @@ enum PageCardType {
           showAcceleratorStatsScreen(context);
         };
       case rewardsPillar:
-        return () async {
+        return () {
           showModalBottomSheetWithButtons(
             btn1Text: AppLocalizations.of(context)!.downloadButton,
             btn1Action: () async {

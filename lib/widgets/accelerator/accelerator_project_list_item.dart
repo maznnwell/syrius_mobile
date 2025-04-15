@@ -202,7 +202,7 @@ class _AcceleratorProjectListItemState
       tags.add(
         Chip(
           label: const Text('Phase needs voting'),
-          backgroundColor: znnColor.withOpacity(0.7),
+          backgroundColor: znnColor.withAlpha((255.0 * 0.7).round()),
         ),
       );
     }
@@ -235,7 +235,7 @@ class _AcceleratorProjectListItemState
       return Chip(
         avatar: const Icon(Icons.how_to_vote),
         label: const Text('Voting open'),
-        backgroundColor: znnColor.withOpacity(0.7),
+        backgroundColor: znnColor.withAlpha((255.0 * 0.7).round()),
       );
     }
     if (widget.acceleratorProject.status == AcceleratorProjectStatus.paid) {

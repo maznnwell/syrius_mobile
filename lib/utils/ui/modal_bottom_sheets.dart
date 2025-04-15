@@ -92,7 +92,7 @@ Future<dynamic> showModalBottomSheetWithBody({
   required BuildContext context,
   required Widget body,
   String? title,
-}) async {
+}) {
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -127,7 +127,7 @@ Future<dynamic> showModalBottomSheetWithBody({
 
 Future<dynamic> showTransactionInProgressBottomSheet({
   required BuildContext context,
-}) async {
+}) {
   return showModalBottomSheetWithBody(
     context: context,
     body: Column(

@@ -456,7 +456,7 @@ class _SendBtcScreenState extends State<SendBtcScreen> {
     final BigInt difference = neededValue - selectedValue;
     final String value = difference.toStringWithDecimals(kBtcDecimals);
     final bool enoughUtxosSelected = difference <= BigInt.zero;
-    final bool hasSegwit = _selectedUtxos.any((utxo) => utxo.utxo.isSegwit());
+    final bool hasSegwit = _selectedUtxos.any((utxo) => utxo.utxo.isSegwit);
 
     final Widget confirmButton = SyriusFilledButton(
       text: AppLocalizations.of(context)!.confirm,

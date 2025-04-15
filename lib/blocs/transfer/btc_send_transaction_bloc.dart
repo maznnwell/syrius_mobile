@@ -109,7 +109,7 @@ class BtcSendTransactionBloc extends BaseBloc<String> {
 
       final BtcTransaction transaction =
           builder.buildTransaction((trDigest, utxo, publicKey, sighash) {
-        if (utxo.utxo.isP2tr()) {
+        if (utxo.utxo.isP2tr) {
           return senderPrivate.signTapRoot(trDigest, sighash: sighash);
         }
         return senderPrivate.signInput(trDigest, sigHash: sighash);

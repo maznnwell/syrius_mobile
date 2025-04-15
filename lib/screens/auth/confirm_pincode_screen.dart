@@ -91,7 +91,7 @@ class _ConfirmPincodeScreenState extends State<ConfirmPincodeScreen> {
     super.dispose();
   }
 
-  Future<dynamic> _showErrorBottomSheet(error) {
+  Future<dynamic> _showErrorBottomSheet(dynamic error) {
     return showModalBottomSheetWithButtons(
       btn1Color: context.colorScheme.errorContainer,
       context: context,

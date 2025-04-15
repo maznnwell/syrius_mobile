@@ -8,11 +8,11 @@ part 'bookmarks_dao.g.dart';
 class BookmarksDao extends DatabaseAccessor<Database> with _$BookmarksDaoMixin {
   BookmarksDao(super.db);
 
-  Future<int> insert(BookmarksCompanion bookmark) async {
+  Future<int> insert(BookmarksCompanion bookmark) {
     return into(bookmarks).insert(bookmark);
   }
 
-  Future<void> insertMultiple(List<BookmarksCompanion> rows) async {
+  Future<void> insertMultiple(List<BookmarksCompanion> rows) {
     return batch(
       (batch) {
         batch.insertAll(bookmarks, rows);
@@ -20,7 +20,7 @@ class BookmarksDao extends DatabaseAccessor<Database> with _$BookmarksDaoMixin {
     );
   }
 
-  Future<int> deleteById(int id) async {
+  Future<int> deleteById(int id) {
     return (delete(bookmarks)..where((f) => f.id.equals(id))).go();
   }
 }

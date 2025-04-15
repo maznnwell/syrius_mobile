@@ -123,7 +123,7 @@ class _BackupSeedScreenState extends State<BackupSeedScreen> {
                 visible: _wasSeedRevealed,
                 child: SyriusFilledButton(
                   text: AppLocalizations.of(context)!.continueButton,
-                  onPressed: () async {
+                  onPressed: () {
                     showConfirmBackupWalletScreen(
                       context: context,
                       isOnboardingFlow: widget.isOnboardingFlow,

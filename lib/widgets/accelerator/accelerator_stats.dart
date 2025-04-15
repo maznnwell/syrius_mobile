@@ -155,7 +155,7 @@ class _AcceleratorStatsState extends State<AcceleratorStats> {
     final double opacity = isTouched ? 1.0 : 0.5;
 
     return PieChartSectionData(
-      color: getTokenColor(token).withOpacity(opacity),
+      color: getTokenColor(token).withAlpha((255.0 * opacity).round()),
       value: value / sumValues,
       title: accountInfo.findTokenByTokenStandard(token.tokenStandard)!.symbol,
       radius: 60.0,

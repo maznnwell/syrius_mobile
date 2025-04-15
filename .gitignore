@@ -65,6 +65,7 @@ unlinked.ds
 unlinked_spec.ds
 
 # Android related
+/android/app/.cxx/
 /android/app/debug
 /android/app/profile
 /android/app/release

@@ -19,7 +19,7 @@ class AssetsZenonToolsPriceInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final Token token = balanceItem.token!;
     final Color iconColor = getTokenColor(token);
-    final Color bgColor = iconColor.withOpacity(0.2);
+    final Color bgColor = iconColor.withAlpha((255.0 * 0.2).round());
     final String coinName = token.name;
 
     final BigDecimal coinAmount =

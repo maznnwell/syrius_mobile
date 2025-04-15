@@ -38,7 +38,7 @@ class BalanceBloc extends BaseBloc<AccountInfo> with RefreshBlocMixin {
     }
   }
 
-  Future<AccountInfo> _getBalancePerAddress(AppAddress address) async {
+  Future<AccountInfo> _getBalancePerAddress(AppAddress address) {
     return zenon.ledger.getAccountInfoByAddress(
       address.toZnnAddress(),
     );

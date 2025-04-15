@@ -10,7 +10,7 @@ class AppAddressesDao extends DatabaseAccessor<Database>
     with _$AppAddressesDaoMixin {
   AppAddressesDao(super.db);
 
-  Future<int> insert(AppAddressesCompanion appAddress) async {
+  Future<int> insert(AppAddressesCompanion appAddress) {
     return into(appAddresses).insert(appAddress);
   }
 
@@ -20,7 +20,7 @@ class AppAddressesDao extends DatabaseAccessor<Database>
     });
   }
 
-  Future<bool> updateData(Insertable<AppAddress> appAddress) async {
+  Future<bool> updateData(Insertable<AppAddress> appAddress) {
     return update(appAddresses).replace(appAddress);
   }
 
